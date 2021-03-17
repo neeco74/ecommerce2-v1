@@ -1,0 +1,54 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+body {
+    position:relative;
+}
+.navbar-item-custom, .navbar-item-custom a {
+
+    color: white;
+}
+
+.footer-custom {
+    text-align:center;
+    position: absolute;
+    
+    width:100%;
+    background-color: #dfeaff;
+    padding-top:25px;
+    margin-top: 50px;
+}
+
+.produit-item h5 {
+    text-transform: uppercase;
+    font-size: 15px;
+    margin-bottom: 1px;
+    
+}
+.produit-item {
+    margin-top: 50px;
+}
+.produit-item .produit-subtitle {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.produit-item .produit-price {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.produit-container {
+    margin-bottom: 150px;
+}
+
+.produit-page-price {
+
+    font-size:16px;
+
+}

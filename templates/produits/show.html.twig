@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ produit.name }}
+	- La boutique FR
+{% endblock %}
+
+{% block content %}
+
+	<div class="row">
+
+		<div class="col-md-5">
+			<img src="/uploads/{{ produit.illustration }}" alt="{{ produit.name }}" class="img-fluid">
+		</div>
+
+		<div class="col-md-7 my-auto">
+
+			<h3>{{ produit.name }}</h3>
+			<p>{{ produit.subtitle }}</p>
+			<span class="produit-page-price">{{ (produit.price / 100) | number_format(2, ',', '.') }} €</span>
+			<hr>
+			<p>
+				{{ produit.description }}
+			</p>
+			<a href="{{ path('panier_add' , { 'id' : produit.id }) }}" class="btn btn-primary">Ajouter au panier</a>
+
+
+		</div>
+	</div>
+{% endblock %}

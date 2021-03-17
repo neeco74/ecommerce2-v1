@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos produits - La boutoque FR{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+    
+        <div class="col-md-3">
+            <h3>Filtrer</h3>
+            {{ form(form) }}
+        </div>
+        
+        <div class="col-md-9">
+            <h3>Nos produits</h3>
+
+            <div class="row produit-container">
+                {% for p in produits %}
+                    <div class="col-md-4">
+                        <div class="produit-item text-center">
+                            <a href="{{ path('produits_show', { 'slug' : p.slug } )}}"><img src="/uploads/{{ p.illustration }}" alt="{{ p.name }}" class="img-fluid"></a>
+                            <h5>{{ p.name }}</h5>
+                            <span class="produit-subtitle">{{ p.subtitle }}</span>
+                            <span class="produit-price">{{ (p.price / 100) | number_format(2, ',', '.') }} €</span>
+                        
+                        </div>
+                    </div>
+        
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

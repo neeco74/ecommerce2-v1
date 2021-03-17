@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte - La boutique FR{% endblock %}
+
+{% block content %}
+    <h1>Mes adresses</h1>
+
+    C'est dans cet espace que vous allez pouvoir gerer toutes vos adresses<br/>
+
+    <a href="{{ path("account")}}">Retour</a>
+
+    <hr>
+
+    {% if app.user.address | length == 0 %}
+    
+        Vous n'avez pas encore ajouté d'adresse dans votre compte client. Pour en ajouter une, veuillez cliquez ici.
+    {% endif %}
+
+
+{% endblock %}
