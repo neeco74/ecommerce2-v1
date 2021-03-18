@@ -51,9 +51,15 @@ class Users implements UserInterface
      */
     private $addresses;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Commandes::class, mappedBy="user")
+     */
+    private $commandes;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,6 +191,36 @@ class Users implements UserInterface
             // set the owning side to null (unless already changed)
             if ($address->getUser() === $this) {
                 $address->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commandes[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commandes $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commandes $commande): self
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
             }
         }
 

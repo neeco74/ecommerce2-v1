@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valider ma commande - La boutique FR
+{% endblock %}
+
+{% block content %}
+	<h2>Je passe ma commande</h2>
+
+	<p>Choisissez vos preferences avant de passer votre commande sur La boutque FR</p>
+	<hr>
+
+	<div class="row">
+
+		<div class="col-md-6">
+
+			<b>Choisir mon adresse de livraison</b><br/>
+			{% set formHtml %}
+			    {{ form(form) }}
+			{% endset %}
+
+			{{ formHtml|replace({'[br]' : '<br/>'}) | raw }}
+	
+		</div>
+
+        <div class="col-md-6">
+            <div class="text-center">
+                <b>Récapitulatif de ma commande</b><br/>
+                <b>Retrouvez le récapitulatif de vos produits</b>
+            </div>
+            <div class="order-summary">
+                {% for key, produit in panier %}
+                    <div class="row {% if key > 0 %}mt-2{% endif %}">
+                        <div class="col-2">
+                            <img src="/uploads/{{ produit.produit.illustration }}" alt="{{ produit.produit.name }}" height="75px"><br/>
+                        </div>
+                        <div class="col-8 my-auto">
+                            {{ produit.produit.name }}<br/>
+                            <small>{{ produit.produit.subtitle }}</small>
+                        </div>
+                        <div class="col-2 my-auto">
+                            x {{ produit.quantity }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <b>Bouton pour payer</b><br/>
+
+        </div>
+	
+    </div>
+{% endblock %}
