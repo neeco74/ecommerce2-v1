@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Commandes;
+
 use App\Classe\PanierService;
 use App\Form\CommandeFormType;
 use App\Entity\CommandeDetails;
@@ -78,6 +80,8 @@ class CommandeController extends AbstractController
             
             // Enregistrer ma commande
             $commande = new Commandes();
+            $reference = $date->format('dmY').'-'.uniqid();
+            $commande->setReference($reference);
             $commande->setUser($this->getUser());
             $commande->setCreatedAt($date);
             $commande->setTransporteurName($transporteurs->getName());
@@ -87,6 +91,7 @@ class CommandeController extends AbstractController
 
             $this->em->persist($commande);
 
+
             foreach($panierService->getFull() as $produit) {
                 $commandeDetails = new CommandeDetails();
                 $commandeDetails->setCommande($commande);
@@ -95,6 +100,7 @@ class CommandeController extends AbstractController
                 $commandeDetails->setPrice($produit['produit']->getPrice());
                 $commandeDetails->setTotal($produit['produit']->getPrice() * $produit['quantity']);
                 $this->em->persist($commandeDetails);
+
             }
             
             $this->em->flush();
@@ -102,7 +108,9 @@ class CommandeController extends AbstractController
             return $this->render('commande/add.html.twig', [
                 'transporteur' => $transporteurs, 
                 'panier' => $panierService->getFull(),
-                'delivery' => $delivery_content
+                'delivery' => $delivery_content,
+                'reference' => $commande->getReference()
+                
             ]);
 
         }

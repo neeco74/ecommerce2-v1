@@ -62,8 +62,47 @@
             <hr>
             <strong>Total : </strong> {{ ((total / 100) + transporteur.price) | number_format(2, ',', '.') }} €<br/>
 
-			<a href="" class="btn btn-success btn-block mt-3">Payer | {{ ((total / 100) + transporteur.price) | number_format(2, ',', '.') }} €</a>
+			<a class="btn btn-success btn-block mt-3" id="checkout-button">Payer | {{ ((total / 100) + transporteur.price) | number_format(2, ',', '.') }} €</a>
 		</div>
 
 	</div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script type="text/javascript">
+        // Create an instance of the Stripe object with your publishable API key
+        var stripe = Stripe("pk_test_51IWlKzFjn869IRqbvzxan5b0s8jn3Quq4oaR9lbu38oQG1laHDrBN6FURV2zkvLjjOzwhsj0rj5oo7Znfnd2QblG007r0qKAgF");
+        var checkoutButton = document.getElementById("checkout-button");
+        checkoutButton.addEventListener("click", function () {
+            fetch("/commande/create-session/{{ reference }}", {
+                method: "POST",
+            })
+            .then(function (response) {
+            return response.json();
+            })
+            .then(function (session) {
+                if(session.error == 'commande') {
+                    windows.location.replace('{{ path('commande_index') }} ');
+                }
+                else {
+                    return stripe.redirectToCheckout({ sessionId: session.id });
+
+                }
+            })
+            .then(function (result) {
+            // If redirectToCheckout fails due to a browser or network
+            // error, you should display the localized error message to your
+            // customer using error.message.
+            if (result.error) {
+                alert(result.error.message);
+            }
+            })
+            .catch(function (error) {
+            console.error("Error:", error);
+            });
+        });
+    </script>
 {% endblock %}
