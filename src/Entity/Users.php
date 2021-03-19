@@ -67,6 +67,13 @@ class Users implements UserInterface
         return $this->id;
     }
 
+    
+    public function getFullName(): string
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
+
     public function getEmail(): ?string
     {
         return $this->email;

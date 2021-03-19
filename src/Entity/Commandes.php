@@ -60,6 +60,20 @@ class Commandes
         $this->commandeDetails = new ArrayCollection();
     }
 
+
+    public function getTotal(): ?int
+    {
+        $total = null;
+        
+        foreach($this->getCommandeDetails()->getValues() as $produit) {
+            $total = $total + ($produit->getPrice() * $produit->getQuantity());
+
+        }
+
+        return $total;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
