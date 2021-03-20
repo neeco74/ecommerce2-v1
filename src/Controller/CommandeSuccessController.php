@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\MailJet;
 use App\Entity\Commandes;
 use App\Classe\PanierService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,10 +40,13 @@ class CommandeSuccessController extends AbstractController
 
             $panierService->remove();
 
-            $commande->setIsPaid(1);
+            $commande->setState(1);
             $this->em->flush();
 
 
+            $mail = new MailJet();
+            $content = "Bonjour ".$commande->getUser()->getFirstName()."<br/>Merci pour votre commande.<br/><br/>";
+            $mail->send($commande->getUser()->getEmail(), $commande->getUser()->getFirstName(), "Votre commande sur La boutique FR", $content);
 
 
 

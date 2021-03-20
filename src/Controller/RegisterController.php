@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Classe\MailJet;
 use App\Entity\Users;
 use App\Form\RegisterFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,6 +28,8 @@ class RegisterController extends AbstractController
     public function index(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
 
+        $notification = null;
+
         $user = new Users();
 
         $form = $this->createForm(RegisterFormType::class, $user);
@@ -37,15 +40,32 @@ class RegisterController extends AbstractController
 
             $user = $form->getData();
 
-            $password = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-            
-            $this->em->persist($user);
-            $this->em->flush();
+            $search_email = $this->em->getRepository(Users::class)->findOneByEmail($user->getEmail());
+
+            if(!$search_email) {
+                $password = $encoder->encodePassword($user, $user->getPassword());
+                $user->setPassword($password);
+                
+                $this->em->persist($user);
+                $this->em->flush();
+
+                $mail = new MailJet();
+                $content = "Bonjour ".$user->getFirstName()."<br/>Bienvenue sur la première boutique dédiée au made in France.<br/><br/>";
+                $mail->send($user->getEmail(), $user-getFirstName(), "Bienvenue sur la boutique FR", $content);
+
+
+                $notification = "Votre inscription s'est correctement déroulée. Vous pouvez dès à présent vous connecter à votre compte.";
+            }
+            else {
+                $notification = "L'email que vous avez renseigné existe déja.";
+
+
+            }
         }
 
         return $this->render('register/index.html.twig', [
             'form' => $form->createView(),
+            'notification' => $notification
         ]);
     }
 }

@@ -54,8 +54,8 @@
             <div class="navbar-item-custom">
             	    <a href="{{ path('panier_index') }}">
                         <i class="fas fa-shopping-cart"></i>
-                        Panier ({{ panierService.total }}) | 
-                    </a>
+                        Panier ({{ panierService.total }})  
+                    </a> |
                 {% if app.user %}
                     <a href="{{ path('account') }}">Mon compte <small>({{ app.user.firstname }})</small></a> | <a href="{{ path('app_logout') }}">Déconnexion</a>
                 {% else %}
