@@ -51,7 +51,7 @@ class RegisterController extends AbstractController
 
                 $mail = new MailJet();
                 $content = "Bonjour ".$user->getFirstName()."<br/>Bienvenue sur la première boutique dédiée au made in France.<br/><br/>";
-                $mail->send($user->getEmail(), $user-getFirstName(), "Bienvenue sur la boutique FR", $content);
+                $mail->send($user->getEmail(), $user->getFirstName(), "Bienvenue sur la boutique FR", $content);
 
 
                 $notification = "Votre inscription s'est correctement déroulée. Vous pouvez dès à présent vous connecter à votre compte.";

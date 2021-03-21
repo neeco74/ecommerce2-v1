@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - La boutique FR
+{% endblock %}
+
+{% block content %}
+
+	<h2>Nous contacter</h2>
+	<p>N'hesitez pas à prendre contact avec notre équipe, nous vous répondrons dans les meilleurs délais.</p>
+	{% for message in app.flashes('notice') %}
+		<div class="alert alert-info">{{ message }}</div>
+	{% endfor %}
+	<div class="row">
+		<div class="col-md-8"></div>
+		<div class="col-md-4"></div>
+		<strong>La boutique FR</strong>
+		<hr>
+		06 77 73 27 67<br/>
+		8 rue des Lylas fleuris, 75000 Paris.<br/>
+		contact@laboutique.fr
+	</div>
+
+{% endblock %}

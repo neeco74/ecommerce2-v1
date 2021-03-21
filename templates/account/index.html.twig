@@ -5,17 +5,33 @@
 {% block content %}
     <h1>Mon compte</h1>
 
-
+    {% if is_granted('ROLE_ADMIN') %}
+        <small><a href="{{ path('admin') }}">Vous êtes un administrateur, acceder au backoffice</a></small><br/>
+    {% endif %}
 
 
 
     Bienvenue {{ app.user.firstname }} dans votre compte. C'est dans cet espace que vous allez pouvoir gérer toute vos informations personnelles<br/>
 
     <hr>
-    <a href="{{ path('account_password') }}">Modifier mon mot de passe</a><br/>
-    <a href="{{ path('account_address') }}">Gerer mes addresses</a><br/>
 
-
+    <div class="row">
+        <div class="col-md-4">
+            <div class="account-item text-center">
+                <a href="{{ path('account_password') }}">Modifier mon mot de passe</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+                    <div class="account-item text-center">
+                <a href="{{ path('account_address') }}">Gerer mes addresses</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+                    <div class="account-item text-center">
+                <a href="{{ path('account_commande') }}">Voir mes commandes</a>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

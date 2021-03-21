@@ -7,7 +7,7 @@
 
 	<h1>Mes commandes</h1>
 
-	C'est dans cet espace que vous allez pouvoir gerer toutes vos commandes<br/>
+	C'est dans cet espace que vous allez pouvoir gerer toutes vos commandes.<br/>
 
 	<a href="{{ path("account")}}">Retour</a>
 
@@ -23,9 +23,9 @@
 			<thead>
 				<tr>
                     <th scope="col">Réference</th>
+                    <th scope="col">Statut</th>
 					<th scope="col">Passée le</th>
-					
-					<th scope="col">Produit</th>
+					<th scope="col">Produit(s)</th>
 					<th scope="col">Total</th>
 					<th scope="col"></th>
 				</tr>
@@ -33,8 +33,17 @@
 			<tbody>
 				{% for commande in commandes %}
 					<tr>
-						<th><span class="badge badge-secondary">{{ commande.createdAt | date('d/m/Y' ) }}</span></th>
-						<td>{{ commande.reference }}</td>
+						<th><span class="badge badge-secondary">{{ commande.reference }}</span></th>
+						<th>
+                            {% if commande.state == 1 %}
+                                Paiement accepté
+                            {% elseif commande.state == 2 %}
+                                Préparation en cours
+                            {% elseif commande.state == 3 %}
+                                Livraison en cours
+                            {% endif %}
+                        </th>
+						<td>{{ commande.createdAt | date('d/m/Y' ) }}</td>
 						<td>{{ commande.commandeDetails | length }}</td>
 						<td>{{ ((commande.transporteurPrice + commande.getTotal) / 100) | number_format(2, ',', '.') }} €</td>
 						<td class="text-right"><a href="{{path('account_commande_show', {'reference' : commande.reference })}}">Voir ma commande</a></td>

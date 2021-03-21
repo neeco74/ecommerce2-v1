@@ -35,8 +35,9 @@ class CommandeSuccessController extends AbstractController
 
             return $this->redirectToRoute('home');
         }
-        $panierService->remove();
-        if(!$commande->getIsPaid()) {
+        
+        //if(!$commande->getIsPaid()) {
+        if($commande->getState() == 0) {
 
             $panierService->remove();
 

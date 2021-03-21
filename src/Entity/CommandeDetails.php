@@ -47,7 +47,7 @@ class CommandeDetails
 
     public function __toString()
     {
-        return $this->getProduit(). 'x'.$this->getQuantity();
+        return $this->getProduit(). ' x'.$this->getQuantity();
     }
     
 
